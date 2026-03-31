@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "Lightpanda headless browser extension for pi — JS-rendered page fetching and CDP server",
   "keywords": ["pi-package", "lightpanda", "browser", "headless", "playwright", "web-scraping"],
+  "type": "module",
   "license": "MIT",
   "pi": {
     "extensions": ["./index.ts"]
   },
-  "peerDependencies": {
-    "@mariozechner/pi-coding-agent": "*",
-    "@sinclair/typebox": "*"
+  "dependencies": {
+    "@mariozechner/pi-coding-agent": "^0.62.0",
+    "@sinclair/typebox": "^0.34.0"
   }
 }
