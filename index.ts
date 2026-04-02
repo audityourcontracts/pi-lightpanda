@@ -186,6 +186,21 @@ export default function lightpandaExtension(pi: ExtensionAPI) {
         };
       }
 
+      if (!output) {
+        return {
+          content: [{ type: "text", text: [
+            `Lightpanda returned no content for: ${params.url}`,
+            "",
+            "The site likely uses bot protection or rendering Lightpanda can't handle. Alternatives:",
+            "  • wayback_search — check the Wayback Machine for an archived snapshot",
+            "  • curl — try a plain HTTP fetch (works if the page doesn't require JS)",
+            "  • Playwright with Chromium — full Chrome rendering, handles most bot-protected sites",
+            stderr ? `\nStderr: ${stderr}` : "",
+          ].join("\n").trim() }],
+          details: { url: params.url, empty: true, stderr: stderr || undefined },
+        };
+      }
+
       const truncated = output.length > 100_000;
       const text = truncated ? output.slice(0, 100_000) + "\n\n[OUTPUT TRUNCATED — use a narrower dump_mode or strip_mode]" : output;
 
