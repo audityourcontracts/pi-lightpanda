@@ -333,7 +333,7 @@ export default function lightpandaExtension(pi: ExtensionAPI) {
     name: "lightpanda_stop",
     label: "Lightpanda Stop",
     description: "Stop the running Lightpanda CDP server.",
-    parameters: Type.Object({}),
+    parameters: { type: "object" } as ReturnType<typeof Type.Object>,
     async execute() {
       if (!server) {
         return {
