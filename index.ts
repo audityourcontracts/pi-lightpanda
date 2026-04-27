@@ -158,7 +158,10 @@ export default function lightpandaExtension(pi: ExtensionAPI) {
 
       args.push(params.url);
 
-      onUpdate?.(`Fetching ${params.url} (mode: ${params.dump_mode ?? "markdown"})…`);
+      onUpdate?.({
+        content: [{ type: "text", text: `Fetching ${params.url} (mode: ${params.dump_mode ?? "markdown"})…` }],
+        details: { url: params.url, dump_mode: params.dump_mode ?? "markdown" },
+      });
 
       const result = spawnSync(BINARY, args, {
         encoding: "utf8",
@@ -273,7 +276,10 @@ export default function lightpandaExtension(pi: ExtensionAPI) {
       ];
       if (params.obey_robots) args.push("--obey-robots");
 
-      onUpdate?.(`Starting Lightpanda CDP server on ${host}:${port}…`);
+      onUpdate?.({
+        content: [{ type: "text", text: `Starting Lightpanda CDP server on ${host}:${port}…` }],
+        details: { host, port },
+      });
 
       const proc = spawn(BINARY, args, {
         detached: false,
@@ -333,7 +339,7 @@ export default function lightpandaExtension(pi: ExtensionAPI) {
     name: "lightpanda_stop",
     label: "Lightpanda Stop",
     description: "Stop the running Lightpanda CDP server.",
-    parameters: { type: "object" } as ReturnType<typeof Type.Object>,
+    parameters: Type.Object({}),
     async execute() {
       if (!server) {
         return {
